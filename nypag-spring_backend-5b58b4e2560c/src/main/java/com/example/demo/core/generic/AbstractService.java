@@ -1,5 +1,6 @@
 package com.example.demo.core.generic;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -9,9 +10,9 @@ public interface AbstractService<T extends AbstractEntity> {
 
   T save(T entity);
 
-  void deleteById(UUID id) throws NoSuchElementException;
+  void deleteById(UUID id) throws NoSuchElementException, AccessDeniedException;
 
-  T updateById(UUID id, T entity) throws NoSuchElementException;
+  T updateById(UUID id, T entity) throws NoSuchElementException, AccessDeniedException;
 
   List<T> findAll();
 
