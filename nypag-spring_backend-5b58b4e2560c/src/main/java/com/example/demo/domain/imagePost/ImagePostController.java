@@ -14,6 +14,7 @@ import org.webjars.NotFoundException;
 
 
 import java.awt.*;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,17 +65,18 @@ public class ImagePostController {
     @PutMapping("/{imagePostId}")
     @PreAuthorize("hasAuthority('IMAGE_UPDATE')")
     @Operation(summary = "Update an image-post", description = "Updates the information of an existing image-post.")
-    public ResponseEntity<ImagePostDTO> updateById(@PathVariable("imagePostId") UUID imagePostId, @RequestBody ImagePostDTO imagePostDTO) {
-        ImagePost imagePost = imagePostService.updateById(imagePostId, mapper.fromDTO(imagePostDTO));
-        return new ResponseEntity<>(mapper.toDTO(imagePost), HttpStatus.OK);
+    public ResponseEntity<ImagePostDTO> updateById(@PathVariable("imagePostId") UUID imagePostId, @RequestBody ImagePostDTO imagePostDTO) throws AccessDeniedException {
+            ImagePost imagePost = imagePostService.updateById(imagePostId, mapper.fromDTO(imagePostDTO));
+            return new ResponseEntity<>(mapper.toDTO(imagePost), HttpStatus.OK);
     }
 
     @DeleteMapping("/{imagePostId}")
     @PreAuthorize("hasAuthority('IMAGE_DELETE')")
     @Operation(summary = "Delete an image-post", description = "Removes an image-post using its id.")
-    public String deleteById(@PathVariable("imagePostId") UUID imagePostId) throws NotFoundException {
-        imagePostService.deleteById(imagePostId);
-        return "ImagePost with id " + imagePostId + " has successfully been deleted";
+    public ResponseEntity<String> deleteById(@PathVariable("imagePostId") UUID imagePostId) throws NotFoundException, AccessDeniedException {
+            imagePostService.deleteById(imagePostId);
+            return new ResponseEntity<>("ImagePost with id " + imagePostId + " has successfully been deleted", HttpStatus.OK);
     }
+
 
 }
