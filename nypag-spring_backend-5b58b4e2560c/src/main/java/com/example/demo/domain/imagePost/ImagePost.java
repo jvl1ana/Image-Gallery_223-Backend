@@ -3,6 +3,7 @@ package com.example.demo.domain.imagePost;
 import com.example.demo.core.generic.AbstractEntity;
 import com.example.demo.domain.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,14 +12,11 @@ import lombok.experimental.Accessors;
 @Entity
 @Table(name = "image_post")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Accessors(chain = true)
 public class ImagePost extends AbstractEntity{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int imagePostId;
 
     @Column(name = "url")
     private String url;
@@ -26,20 +24,10 @@ public class ImagePost extends AbstractEntity{
     @Column(name = "description")
     private String description;
 
-    @Column(name = "like")
-    private int like;
-
+    @Column(name = "likes")
+    private Integer likes;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
     private User author;
-
-    public ImagePost(int imagePostId, String url, String description, int like, User author) {
-        this.imagePostId = imagePostId;
-        this.url = url;
-        this.description = description;
-        this.like = like;
-        this.author = author;
-    }
 
 }
