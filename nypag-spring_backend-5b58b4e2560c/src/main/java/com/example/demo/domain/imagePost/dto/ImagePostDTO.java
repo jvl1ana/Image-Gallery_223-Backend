@@ -1,11 +1,11 @@
 package com.example.demo.domain.imagePost.dto;
 
 import com.example.demo.core.generic.AbstractDTO;
-import com.example.demo.domain.user.dto.UserDTO;
+import com.example.demo.domain.user.dto.AuthorDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Set;
+import java.util.UUID;
 
 @NoArgsConstructor
 @Getter
@@ -18,9 +18,13 @@ public class ImagePostDTO extends AbstractDTO {
 
     private String description;
 
-    private Set<UserDTO> author;
+    private int likes;
 
-    public ImagePostDTO(int imagePostId, String url, String description, Set<UserDTO> author) {
+    private AuthorDTO author;
+
+
+    public ImagePostDTO(UUID id, int imagePostId, String url, String description, AuthorDTO author) {
+        super(id);
         this.imagePostId = imagePostId;
         this.url = url;
         this.description = description;
