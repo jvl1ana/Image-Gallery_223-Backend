@@ -1,6 +1,7 @@
 package com.example.demo.core.exception;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,6 +97,11 @@ public class CustomGlobalExceptionHandler {
   @ExceptionHandler({DataIntegrityViolationException.class})
   public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
     return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler({AccessDeniedException.class})
+  public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex) {
+    return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
   }
 
 }
