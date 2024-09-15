@@ -3,6 +3,8 @@ package com.example.demo.domain.user;
 import com.example.demo.domain.user.dto.UserDTO;
 import com.example.demo.domain.user.dto.UserMapper;
 import com.example.demo.domain.user.dto.UserRegisterDTO;
+
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 import jakarta.validation.Valid;
@@ -58,14 +60,14 @@ public class UserController {
   }
   @PutMapping("/{id}")
   @PreAuthorize("hasAuthority('USER_MODIFY') && @userPermissionEvaluator.isUserAboveAge(authentication.principal.user,18)")
-  public ResponseEntity<UserDTO> updateById(@PathVariable UUID id, @Valid @RequestBody UserDTO userDTO) {
+  public ResponseEntity<UserDTO> updateById(@PathVariable UUID id, @Valid @RequestBody UserDTO userDTO) throws AccessDeniedException {
     User user = userService.updateById(id, userMapper.fromDTO(userDTO));
     return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
   @PreAuthorize("hasAuthority('USER_DELETE')")
-  public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
+  public ResponseEntity<Void> deleteById(@PathVariable UUID id) throws AccessDeniedException {
     userService.deleteById(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
