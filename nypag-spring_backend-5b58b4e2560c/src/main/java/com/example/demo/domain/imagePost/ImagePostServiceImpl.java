@@ -93,6 +93,6 @@ public class ImagePostServiceImpl implements ImagePostService {
         if (user.getId().equals(imagePost.getAuthor().getId())) {
             return true;
         }
-        return user.getRoles().stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
+        return user.getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN"));
     }
 }
