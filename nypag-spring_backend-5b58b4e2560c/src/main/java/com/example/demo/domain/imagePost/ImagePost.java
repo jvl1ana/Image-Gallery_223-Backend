@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "image_post")
 @NoArgsConstructor
@@ -16,7 +19,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class ImagePost extends AbstractEntity{
+public class ImagePost extends AbstractEntity {
 
     @Column(name = "url")
     private String url;
@@ -24,8 +27,13 @@ public class ImagePost extends AbstractEntity{
     @Column(name = "description")
     private String description;
 
-    @Column(name = "likes")
-    private Integer likes;
+    /*@Column(name = "likes")
+    private Integer likes;*/
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_like", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), uniqueConstraints = @UniqueConstraint(columnNames = {"post_id", "user_id"}))
+    private Set<User> likes = new HashSet<>();
 
     @ManyToOne
     private User author;
