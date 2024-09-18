@@ -68,16 +68,35 @@ VALUES
 
 
 -- Testdata for ImagePost
-INSERT INTO image_post (id, url, description, likes, author_id)
+INSERT INTO image_post (id, url, description, author_id)
 VALUES
 -- ImagePosts from James Bond (Admin)
-('74d46555-9466-4c17-88b4-fbb90807395d', 'https://example.com/image1.jpg', 'A beautiful sunset over the mountains.', 10,
+('74d46555-9466-4c17-88b4-fbb90807395d', 'https://example.com/image1.jpg', 'A beautiful sunset over the mountains.',
  'ba804cb9-fa14-42a5-afaf-be488742fc54'),
 ('c57e1b69-6fa4-42ae-87ff-df02d0a4b8c4', 'https://example.com/image2.jpg',
- 'An exciting scene from a recent hiking trip.', 7, 'ba804cb9-fa14-42a5-afaf-be488742fc54'),
+ 'An exciting scene from a recent hiking trip.', 'ba804cb9-fa14-42a5-afaf-be488742fc54'),
 
 -- ImagePosts from Tyler Durden (User)
 ('d9e3f2b4-e518-4a37-8a9e-4b3c0a64805e', 'https://example.com/image3.jpg',
- 'A shot of the bustling city streets at night.', 15, '0d8fa44c-54fd-4cd0-ace9-2a7da57992de'),
+ 'A shot of the bustling city streets at night.', '0d8fa44c-54fd-4cd0-ace9-2a7da57992de'),
 ('afb67c9b-cae5-4709-9f8d-e84236cb1e92', 'https://example.com/image4.jpg',
- 'A serene beach with clear waters and white sand.', 20, '0d8fa44c-54fd-4cd0-ace9-2a7da57992de') ON CONFLICT DO NOTHING;
+ 'A serene beach with clear waters and white sand.', '0d8fa44c-54fd-4cd0-ace9-2a7da57992de') ON CONFLICT DO NOTHING;
+
+
+-- Likes between Users and ImagePosts
+INSERT INTO users_like (post_id, user_id)
+VALUES
+    -- James Bond (admin) liked some posts
+    ('d9e3f2b4-e518-4a37-8a9e-4b3c0a64805e', 'ba804cb9-fa14-42a5-afaf-be488742fc54'),
+    ('afb67c9b-cae5-4709-9f8d-e84236cb1e92', 'ba804cb9-fa14-42a5-afaf-be488742fc54'),
+    ('afb67c9b-cae5-4709-9f8d-e84236cb1e92', 'ba804cb9-fa14-42a5-afaf-be488742fc54'),
+
+    -- Tyler Durden liked some posts
+    ('74d46555-9466-4c17-88b4-fbb90807395d', '0d8fa44c-54fd-4cd0-ace9-2a7da57992de'),
+    ('c57e1b69-6fa4-42ae-87ff-df02d0a4b8c4', '0d8fa44c-54fd-4cd0-ace9-2a7da57992de'),
+
+    -- Max liked some posts
+    ('74d46555-9466-4c17-88b4-fbb90807395d', '3a97edf9-b481-4f33-9b4f-ef4104b15df1'),
+    ('d9e3f2b4-e518-4a37-8a9e-4b3c0a64805e', '3a97edf9-b481-4f33-9b4f-ef4104b15df1')
+    ON CONFLICT DO NOTHING;
+
