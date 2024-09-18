@@ -2,19 +2,20 @@ package com.example.demo.domain.imagePost;
 
 import com.example.demo.domain.imagePost.dto.ImagePostDTO;
 import com.example.demo.domain.imagePost.dto.ImagePostMapper;
+import com.example.demo.domain.imagePost.dto.NewImagePostDTO;
+import com.example.demo.domain.user.User;
+import com.example.demo.domain.user.UserDetailsImpl;
+import com.example.demo.domain.user.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 
-import java.awt.*;
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class ImagePostController {
     ImagePostServiceImpl imagePostService;
 
     @Autowired
-    ImagePostService service;
+    UserServiceImpl userService;
 
     @Autowired
     ImagePostMapper mapper;
@@ -57,26 +58,66 @@ public class ImagePostController {
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('IMAGE_CREATE')")
     @Operation(summary = "Create a new image-post", description = "Adds a new image-Post with its information.")
-    public ResponseEntity<ImagePostDTO> addImagePost(@RequestBody ImagePostDTO imagePostDTO) throws DataIntegrityViolationException {
-        ImagePost imagePost = imagePostService.save(mapper.fromDTO(imagePostDTO));
+    public ResponseEntity<ImagePostDTO> addImagePost(@RequestBody NewImagePostDTO newImagePostDTO) {
+        ImagePost imagePost = imagePostService.save(mapper.fromNewImagePostDTO(newImagePostDTO));
         return new ResponseEntity<>(mapper.toDTO(imagePost), HttpStatus.CREATED);
     }
 
     @PutMapping("/{imagePostId}")
-    @PreAuthorize("hasAuthority('IMAGE_UPDATE')")
+    @PreAuthorize("hasAuthority('IMAGE_UPDATE') && @imagePostPermissionEvaluator.canEditOrDelete(authentication.principal.user, #imagePostId)")
     @Operation(summary = "Update an image-post", description = "Updates the information of an existing image-post.")
-    public ResponseEntity<ImagePostDTO> updateById(@PathVariable("imagePostId") UUID imagePostId, @RequestBody ImagePostDTO imagePostDTO) throws AccessDeniedException {
-            ImagePost imagePost = imagePostService.updateById(imagePostId, mapper.fromDTO(imagePostDTO));
-            return new ResponseEntity<>(mapper.toDTO(imagePost), HttpStatus.OK);
+    public ResponseEntity<ImagePostDTO> updateById(@PathVariable("imagePostId") UUID imagePostId, @RequestBody NewImagePostDTO newImagePostDTO) {
+        ImagePost imagePost = imagePostService.updateById(imagePostId, mapper.fromNewImagePostDTO(newImagePostDTO));
+        return new ResponseEntity<>(mapper.toDTO(imagePost), HttpStatus.OK);
+    }
+
+    @PutMapping("/likedImagePost/{imagePostId}")
+    @PreAuthorize("hasAuthority('IMAGE_READ')")
+    public ResponseEntity<ImagePostDTO> addLike(@PathVariable("imagePostId") UUID imagePostId,
+                                                @AuthenticationPrincipal UserDetailsImpl currentUser) {
+        ImagePost imagePost = imagePostService.findById(imagePostId);
+
+        User user = userService.findById(currentUser.user().getId());
+
+        if (!imagePost.getLikes().contains(user)) {
+            imagePost.getLikes().add(user);
+
+            imagePostService.save(imagePost);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        ImagePostDTO imagePostDTO = mapper.toDTO(imagePost);
+        return new ResponseEntity<>(imagePostDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/unlikedImagePost/{imagePostId}")
+    @PreAuthorize("hasAuthority('IMAGE_READ')")
+    public ResponseEntity<ImagePostDTO> removeLike(@PathVariable("imagePostId") UUID imagePostId,
+                                                   @AuthenticationPrincipal UserDetailsImpl currentUser) {
+        ImagePost imagePost = imagePostService.findById(imagePostId);
+
+        User user = userService.findById(currentUser.user().getId());
+
+        if (imagePost.getLikes().contains(user)) {
+            imagePost.getLikes().remove(user);
+
+            imagePostService.save(imagePost);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        ImagePostDTO imagePostDTO = mapper.toDTO(imagePost);
+        return new ResponseEntity<>(imagePostDTO, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{imagePostId}")
-    @PreAuthorize("hasAuthority('IMAGE_DELETE')")
+    @PreAuthorize("hasAuthority('IMAGE_DELETE') && @imagePostPermissionEvaluator.canEditOrDelete(authentication.principal.user, #imagePostId)")
     @Operation(summary = "Delete an image-post", description = "Removes an image-post using its id.")
-    public ResponseEntity<String> deleteById(@PathVariable("imagePostId") UUID imagePostId) throws NotFoundException, AccessDeniedException {
-            imagePostService.deleteById(imagePostId);
-            return new ResponseEntity<>("ImagePost with id " + imagePostId + " has successfully been deleted", HttpStatus.OK);
+    public ResponseEntity<String> deleteById(@PathVariable("imagePostId") UUID imagePostId) throws NotFoundException {
+        imagePostService.deleteById(imagePostId);
+        return new ResponseEntity<>("ImagePost with id " + imagePostId + " has successfully been deleted", HttpStatus.OK);
     }
-
 
 }
