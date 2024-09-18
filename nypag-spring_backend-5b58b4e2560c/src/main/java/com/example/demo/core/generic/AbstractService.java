@@ -10,9 +10,9 @@ public interface AbstractService<T extends AbstractEntity> {
 
   T save(T entity);
 
-  void deleteById(UUID id) throws NoSuchElementException, AccessDeniedException;
+  void deleteById(UUID id) throws NoSuchElementException;
 
-  T updateById(UUID id, T entity) throws NoSuchElementException, AccessDeniedException;
+  T updateById(UUID id, T entity) throws NoSuchElementException;
 
   List<T> findAll();
 
