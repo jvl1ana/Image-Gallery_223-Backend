@@ -7,5 +7,6 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ImagePostMapper extends AbstractMapper<ImagePost, ImagePostDTO> {
+    ImagePost fromNewImagePostDTO(NewImagePostDTO dto);
 
 }
