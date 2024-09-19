@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "16f4e3ea-88c1-4a62-96d8-a8d150fb15a0",
+		"name": "ÜK-223-TestCollection-Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33605950"
+	},
+	"item": [
+		{
+			"name": "get all Image-Posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Image-Post by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/{{imagePostId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"{{imagePostId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all posts of one User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/user/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create Image-Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"https://example.com/image1234.jpg\",\r\n    \"description\": \"A beautiful sky :)\",\r\n    \"author\": {\r\n        \"id\": \"ba804cb9-fa14-42a5-afaf-be488742fc54\",\r\n        \"firstName\": \"James\",\r\n        \"lastName\": \"Bond\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Image-Post of current user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"id\": \"74d46555-9466-4c17-88b4-fbb90807395d\",\r\n        \"url\": \"https://example.com/image1.jpg\",\r\n        \"description\": \"A not so beautiful sunset over the mountains.\",\r\n        \"likes\": [\r\n            {\r\n                \"id\": \"3a97edf9-b481-4f33-9b4f-ef4104b15df1\",\r\n                \"firstName\": \"Max\",\r\n                \"lastName\": \"Max\"\r\n            },\r\n            {\r\n                \"id\": \"0d8fa44c-54fd-4cd0-ace9-2a7da57992de\",\r\n                \"firstName\": \"Tyler\",\r\n                \"lastName\": \"Durden\"\r\n            }\r\n        ],\r\n        \"author\": {\r\n            \"id\": \"ba804cb9-fa14-42a5-afaf-be488742fc54\",\r\n            \"firstName\": \"James\",\r\n            \"lastName\": \"Bond\"\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/{{imagePostId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"{{imagePostId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Image-Post of different user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"id\": \"74d46555-9466-4c17-88b4-fbb90807395d\",\r\n        \"url\": \"https://example.com/image1.jpg\",\r\n        \"description\": \"A very beautiful sunset over the mountains.\",\r\n        \"likes\": [\r\n            {\r\n                \"id\": \"3a97edf9-b481-4f33-9b4f-ef4104b15df1\",\r\n                \"firstName\": \"Max\",\r\n                \"lastName\": \"Max\"\r\n            },\r\n            {\r\n                \"id\": \"0d8fa44c-54fd-4cd0-ace9-2a7da57992de\",\r\n                \"firstName\": \"Tyler\",\r\n                \"lastName\": \"Durden\"\r\n            }\r\n        ],\r\n        \"author\": {\r\n            \"id\": \"ba804cb9-fa14-42a5-afaf-be488742fc54\",\r\n            \"firstName\": \"James\",\r\n            \"lastName\": \"Bond\"\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/d9e3f2b4-e518-4a37-8a9e-4b3c0a64805e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"d9e3f2b4-e518-4a37-8a9e-4b3c0a64805e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete Image-Post of current user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/{{imagePostId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"{{imagePostId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete Image-Post of different user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiSU1BR0VfQ1JFQVRFIn0seyJhdXRob3JpdHkiOiJJTUFHRV9SRUFEIn0seyJhdXRob3JpdHkiOiJVU0VSX01PRElGWSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfREVMRVRFIn0seyJhdXRob3JpdHkiOiJJTUFHRV9VUERBVEUifV0sInN1YiI6ImJhODA0Y2I5LWZhMTQtNDJhNS1hZmFmLWJlNDg4NzQyZmM1NCIsImlhdCI6MTcyNjcyOTMzNywiZXhwIjoxNzI2ODI5MzM3LCJpc3MiOiJ1azIyMyJ9.ETsomeEOmAJV_ijTOm_hr8wsdXhXBuZCgn2i3eSobwU1-4GOV9L_QKl2-W0C7B6z",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/d9e3f2b4-e518-4a37-8a9e-4b3c0a64805e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"d9e3f2b4-e518-4a37-8a9e-4b3c0a64805e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add like of current user to Image-post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiSU1BR0VfQ1JFQVRFIn0seyJhdXRob3JpdHkiOiJVU0VSX0RFTEVURSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfUkVBRCJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfVVBEQVRFIn0seyJhdXRob3JpdHkiOiJJTUFHRV9ERUxFVEUifSx7ImF1dGhvcml0eSI6IklNQUdFX0NSRUFURSJ9LHsiYXV0aG9yaXR5IjoiVVNFUl9NT0RJRlkifSx7ImF1dGhvcml0eSI6IklNQUdFX1JFQUQifSx7ImF1dGhvcml0eSI6IklNQUdFX1VQREFURSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfREVMRVRFIn0seyJhdXRob3JpdHkiOiJERUZBVUxUIn1dLCJzdWIiOiJiYTgwNGNiOS1mYTE0LTQyYTUtYWZhZi1iZTQ4ODc0MmZjNTQiLCJpYXQiOjE3MjY2NjYwNDgsImV4cCI6MTcyNjc2NjA0OCwiaXNzIjoidWsyMjMifQ.nQpQYtOCeejpypKvGj1V8sVjOr3lS56VB4isGQ92iAOUNkqqE7VRnddBh05y7xgl",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/likedImagePost/74d46555-9466-4c17-88b4-fbb90807395d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"likedImagePost",
+						"74d46555-9466-4c17-88b4-fbb90807395d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add like of current user to Image-Post with having it liked before",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiREVGQVVMVCJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfREVMRVRFIn0seyJhdXRob3JpdHkiOiJVU0VSX01PRElGWSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfUkVBRCJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfQ1JFQVRFIn0seyJhdXRob3JpdHkiOiJJTUFHRV9VUERBVEUifSx7ImF1dGhvcml0eSI6IklNQUdFX0RFTEVURSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfUkVBRCJ9LHsiYXV0aG9yaXR5IjoiVVNFUl9ERUxFVEUifSx7ImF1dGhvcml0eSI6IklNQUdFX0NSRUFURSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfVVBEQVRFIn1dLCJzdWIiOiJiYTgwNGNiOS1mYTE0LTQyYTUtYWZhZi1iZTQ4ODc0MmZjNTQiLCJpYXQiOjE3MjY3Mjc1MTEsImV4cCI6MTcyNjgyNzUxMSwiaXNzIjoidWsyMjMifQ.NYlo529t3OIKfLJLAl9qUYjsdSO8BxNCU-mnj2cmZPKWG9i9ukkH2rVCSP8AEb4P",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/likedImagePost/afb67c9b-cae5-4709-9f8d-e84236cb1e92",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"likedImagePost",
+						"afb67c9b-cae5-4709-9f8d-e84236cb1e92"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unlike a post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiREVGQVVMVCJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfREVMRVRFIn0seyJhdXRob3JpdHkiOiJVU0VSX01PRElGWSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfUkVBRCJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfQ1JFQVRFIn0seyJhdXRob3JpdHkiOiJJTUFHRV9VUERBVEUifSx7ImF1dGhvcml0eSI6IklNQUdFX0RFTEVURSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfUkVBRCJ9LHsiYXV0aG9yaXR5IjoiVVNFUl9ERUxFVEUifSx7ImF1dGhvcml0eSI6IklNQUdFX0NSRUFURSJ9LHsiYXV0aG9yaXR5IjoiSU1BR0VfVVBEQVRFIn1dLCJzdWIiOiJiYTgwNGNiOS1mYTE0LTQyYTUtYWZhZi1iZTQ4ODc0MmZjNTQiLCJpYXQiOjE3MjY3Mjc1MTEsImV4cCI6MTcyNjgyNzUxMSwiaXNzIjoidWsyMjMifQ.NYlo529t3OIKfLJLAl9qUYjsdSO8BxNCU-mnj2cmZPKWG9i9ukkH2rVCSP8AEb4P",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/unlikedImagePost/afb67c9b-cae5-4709-9f8d-e84236cb1e92",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"unlikedImagePost",
+						"afb67c9b-cae5-4709-9f8d-e84236cb1e92"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unlike an Image-Post without having it liked before",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/imagePosts/unlikedImagePost/74d46555-9466-4c17-88b4-fbb90807395d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"imagePosts",
+						"unlikedImagePost",
+						"74d46555-9466-4c17-88b4-fbb90807395d"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "variable_key",
+			"value": ""
+		}
+	]
+}
