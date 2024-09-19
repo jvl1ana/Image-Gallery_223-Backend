@@ -73,6 +73,7 @@ public class ImagePostController {
 
     @PutMapping("/likedImagePost/{imagePostId}")
     @PreAuthorize("hasAuthority('IMAGE_READ')")
+    @Operation(summary = "Add a like to an image-post", description = "Updates the the like list of an existing image-post.")
     public ResponseEntity<ImagePostDTO> addLike(@PathVariable("imagePostId") UUID imagePostId,
                                                 @AuthenticationPrincipal UserDetailsImpl currentUser) {
         ImagePost imagePost = imagePostService.findById(imagePostId);
@@ -93,6 +94,7 @@ public class ImagePostController {
 
     @PutMapping("/unlikedImagePost/{imagePostId}")
     @PreAuthorize("hasAuthority('IMAGE_READ')")
+    @Operation(summary = "Remove a like from an image-post", description = "Updates the the like list of an existing image-post.")
     public ResponseEntity<ImagePostDTO> removeLike(@PathVariable("imagePostId") UUID imagePostId,
                                                    @AuthenticationPrincipal UserDetailsImpl currentUser) {
         ImagePost imagePost = imagePostService.findById(imagePostId);
