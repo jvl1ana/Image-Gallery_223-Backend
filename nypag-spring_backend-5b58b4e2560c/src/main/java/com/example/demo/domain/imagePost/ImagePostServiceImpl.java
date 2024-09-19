@@ -1,17 +1,13 @@
 package com.example.demo.domain.imagePost;
 
-import com.example.demo.domain.user.User;
-import com.example.demo.domain.user.UserDetailsImpl;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -24,7 +20,6 @@ public class ImagePostServiceImpl implements ImagePostService {
     @Transactional
     @Override
     public ImagePost save(ImagePost newImagePost) throws DataIntegrityViolationException {
-
         return repository.save(newImagePost);
     }
 
@@ -39,7 +34,6 @@ public class ImagePostServiceImpl implements ImagePostService {
     @Override
     public ImagePost updateById(UUID id, ImagePost updatedImagePost) throws NoSuchElementException, DataIntegrityViolationException {
         repository.findById(id).orElseThrow(() -> new NotFoundException("Image-Post with id " + id + " couldn't be found"));
-
 
         updatedImagePost.setId(id);
         return repository.save(updatedImagePost);
