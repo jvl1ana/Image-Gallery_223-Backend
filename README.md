@@ -49,7 +49,7 @@ Als nächstes müssen Sie die richtigen enviroment variables hinzufügen:
 
 
 ### Schritt 3
-Jetzt sind Sie bereit um das Backend in Postman zu testen. Wichtig ist immer das Login durchzuführen und den Bearer Token als zur authorization hinzuzufügen ODER Sie ändern die enviroment variables.
+Jetzt sind Sie bereit um das Backend in Postman zu testen. Wichtig ist immer das Login durchzuführen und den Bearer Token zu den enviroment variables neu hinzufügen.
 
 Ausserdem ist zu beachten, dass Sie nach dem Sie eine komplette Test Colletion getestet haben, dass Sie das Backend neustarten um die nächste Test Colletion zu testen. Wenn Sie das nicht machen kann es zu Problemen führen.
 
