@@ -17,31 +17,41 @@ docker run --name gallery_db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=post
 ![image](https://github.com/user-attachments/assets/dbe8165b-e74b-4fbb-8045-acc4dac0c5c1)
 
 ### Schritt 4
-Um die Applikation vollständig nutzen zu können, starten Sie Ihr Frontend mithilfe der Anleitung. [Hier](https://github.com/MaximilianNoethe/Image-Gallery_223-Frontend/tree/main) finden Sie die Anleitung für das Backend.
+Um die Applikation vollständig nutzen zu können, starten Sie Ihr Frontend mithilfe der Anleitung. [Hier](https://github.com/MaximilianNoethe/Image-Gallery_223-Frontend/tree/main) finden Sie die Anleitung für das Frontend.
 
 Ausserdem starten Sie den Docker damit die Verbinung zur Datenbank besteht.
 
 ### Schritt 5
 Um sich anzumelden benutzen Sie einer dieser User:
 
-Admin:
+Admin: admin@example.com
+
+PW: 1234
 
 
-User:
+User: user@example.com
+
+PW: 1234
 
 ### Postman Testing
 Das Testen des Backends haben wir mit einer Postman Collection getestet. 
 
 Links zu den Postman Files:
+[Link](https://github.com/FabianoM07/Image-Gallery_223-Backend/tree/main/nypag-spring_backend-5b58b4e2560c/src/test/resources/postman)
 
 ### Schritt 1
 Laden Sie die Postman Files herunter und importieren Sie die Files in Postman.
 
 ### Schritt 2
-Enviroments (MAYBE)
+Als nächstes müssen Sie die richtigen enviroment variables hinzufügen:
+
+![image](https://github.com/user-attachments/assets/004dabf0-2f38-4676-a5e1-d49f696bd463)
+
 
 ### Schritt 3
-Jetzt sind Sie bereit um das Backend in Postman zu testen. Wichtig ist immer das Login durchzuführen und den Bearer Token als zur authorization hinzuzufügen.
+Jetzt sind Sie bereit um das Backend in Postman zu testen. Wichtig ist immer das Login durchzuführen und den Bearer Token als zur authorization hinzuzufügen ODER Sie ändern die enviroment variables.
+
+Ausserdem ist zu beachten, dass Sie nach dem Sie eine komplette Test Colletion getestet haben, dass Sie das Backend neustarten um die nächste Test Colletion zu testen. Wenn Sie das nicht machen kann es zu Problemen führen.
 
 
 
